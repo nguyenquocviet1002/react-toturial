@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Table from "./page/Table";
 import Form from "./page/Form";
 import instance from "./api/APIconfig";
-import { data } from "autoprefixer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -23,15 +23,7 @@ class App extends Component {
   removeCharacter = (index) => {
     instance
       .delete("/course/" + index)
-      .then((response) => {
-        let i = response.data.id;
-        console.log(data);
-        this.setState({
-          data: data.filter((character, i) => {
-            return i !== data.id;
-          }),
-        });
-      })
+      .then((response) => {})
       .catch((error) => {
         this.setState({ error: true });
       });
@@ -40,14 +32,29 @@ class App extends Component {
   handleSubmit = (characters) => {
     this.setState({ characters: [...this.state.characters, characters] });
   };
+
   render() {
-    // const { characters } = this.state;
     const { data } = this.state;
     return (
       <>
-        <Header />
-        <Table characterData={data} removeCharacter={this.removeCharacter} />
-        <Form handleSubmit={this.handleSubmit} />
+        <Header isLoggedIn={true} />
+        <Router>
+          <Routes>
+            <Route
+              path="/add"
+              element={<Form handleSubmit={this.handleSubmit} />}
+            />
+            <Route
+              path="/list"
+              element={
+                <Table
+                  characterData={data}
+                  removeCharacter={this.removeCharacter}
+                />
+              }
+            />
+          </Routes>
+        </Router>
       </>
     );
   }

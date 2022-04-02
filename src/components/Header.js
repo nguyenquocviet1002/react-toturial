@@ -1,19 +1,26 @@
 import React, { Component } from "react";
+const Nav = () => {
+  return (
+    <div className="w-full uppercase text-white bg-black py-3">
+      <ul className="flex justify-center gap-3">
+        <li>
+          <a href="/">Home</a>
+        </li>
+        <li>
+          <a href="/add">News</a>
+        </li>
+        <li>
+          <a href="/list">List</a>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 class Header extends Component {
   render() {
-    return (
-      <div className="w-full uppercase text-white bg-black py-3">
-        <ul className="flex justify-center gap-3">
-          <li>
-            <a href="#">link1</a>
-          </li>
-          <li>
-            <a href="#">link2</a>
-          </li>
-        </ul>
-      </div>
-    );
+    const isLoggedIn = this.props.isLoggedIn;
+    return <>{isLoggedIn ? <Nav /> : <h1>Login</h1>}</>;
   }
 }
 
