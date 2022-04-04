@@ -7,6 +7,7 @@ const TableHead = () => {
         <th className="border border-slate-300 p-1">ID</th>
         <th className="border border-slate-300 p-1">Name</th>
         <th className="border border-slate-300 p-1">Time</th>
+        <th className="border border-slate-300 p-1">Action</th>
       </tr>
     </thead>
   );
@@ -26,6 +27,18 @@ const TableBody = (props) => {
           >
             Delete
           </button>
+          <a
+            className="rounded-full border-2 bg-black text-white p-2"
+            href={item.id}
+          >
+            Info
+          </a>
+          <a
+            className="rounded-full border-2 bg-black text-white p-2"
+            href={`edit/${item.id}`}
+          >
+            Edit
+          </a>
         </td>
       </tr>
     );

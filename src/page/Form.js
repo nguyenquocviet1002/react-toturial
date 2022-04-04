@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 class Form extends Component {
   initialState = {
-    name: "",
-    job: "",
+    title: "",
+    time: "",
   };
 
   state = this.initialState;
@@ -21,7 +21,7 @@ class Form extends Component {
     this.setState(this.initialState);
   };
   render() {
-    const { name, job } = this.state;
+    const { title, time } = this.state;
 
     return (
       <form>
@@ -29,18 +29,18 @@ class Form extends Component {
         <input
           className="border-2 p-2"
           type="text"
-          name="name"
-          id="name"
-          value={name}
+          name="title"
+          id="title"
+          value={title}
           onChange={this.handleChange}
         />
-        <label htmlFor="job">Job</label>
+        <label htmlFor="job">Time</label>
         <input
           className="border-2 p-2"
-          type="text"
-          name="job"
-          id="job"
-          value={job}
+          type="number"
+          name="time"
+          id="time"
+          value={time}
           onChange={this.handleChange}
         />
         <input

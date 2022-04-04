@@ -4,6 +4,8 @@ import Table from "./page/Table";
 import Form from "./page/Form";
 import instance from "./api/APIconfig";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Detail from "./page/Detail";
+import Edit from "./page/Edit";
 
 class App extends Component {
   state = {
@@ -20,17 +22,51 @@ class App extends Component {
         this.setState({ error: true });
       });
   }
+
   removeCharacter = (index) => {
     instance
-      .delete("/course/" + index)
-      .then((response) => {})
+      .delete(`/course/${index}`)
+      .then((response) => {
+        console.log(response.data);
+      })
       .catch((error) => {
         this.setState({ error: true });
       });
   };
 
-  handleSubmit = (characters) => {
-    this.setState({ characters: [...this.state.characters, characters] });
+  handleSubmit = (data) => {
+    const config = { headers: { "Content-Type": "application/json" } };
+    instance
+      .post("/course", data, config)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        this.setState({ error: true });
+      });
+  };
+
+  handleDetail = (id) => {
+    instance
+      .get(`course/${id}`)
+      .then((response) => {
+        this.setState({ data: response.data });
+      })
+      .catch((error) => {
+        this.setState({ error: true });
+      });
+  };
+
+  handleEdit = (data, id) => {
+    const config = { headers: { "Content-Type": "application/json" } };
+    instance
+      .post(`/course/${id}`, data, config)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        this.setState({ error: true });
+      });
   };
 
   render() {
@@ -50,6 +86,22 @@ class App extends Component {
                 <Table
                   characterData={data}
                   removeCharacter={this.removeCharacter}
+                />
+              }
+            />
+            <Route
+              path="/:id"
+              element={
+                <Detail dataDetail={data} handleDetail={this.handleDetail} />
+              }
+            />
+            <Route
+              path="edit/:id"
+              element={
+                <Edit
+                  dataDetail={data}
+                  handleEdit={this.handleEdit}
+                  handleDetail={this.handleDetail}
                 />
               }
             />
